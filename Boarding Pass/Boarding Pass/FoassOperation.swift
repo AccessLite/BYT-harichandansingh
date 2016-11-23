@@ -12,8 +12,8 @@ final class FoassOperation: JSONConvertible, DataConvertible {
     //MARK: - Properties
     let name: String
     let url: String
-    let fields: [[String: AnyObject]]
-    
+    let fields: [[String: AnyObject]] // this should be [FoaasField]
+  
     //MARK; - Initializers
     init(name: String, url: String, fields: [[String: AnyObject]]) {
         self.name = name
@@ -26,6 +26,8 @@ final class FoassOperation: JSONConvertible, DataConvertible {
             let url = json["url"] as? String,
             let fields = json["fields"] as? [[String: AnyObject]]
             else { return nil }
+      
+        // convert 'fields' into [FoaasField]
         self.init(name: name, url: url, fields: fields)
     }
     
@@ -50,15 +52,20 @@ final class FoassOperation: JSONConvertible, DataConvertible {
         let json: [String: AnyObject] =
             ["name": self.name as AnyObject,
              "url": self.url as AnyObject,
-             "fields": self.fields as AnyObject
+             "fields": self.fields as AnyObject // this won't work once 'fields' is type [FoaasField]
         ]
         return json
     }
     
     func toData() throws -> Data {
+        // this protocol should/can be written as a single line.
+        // consider the following:
+        // 1. should toData() handle the throw, or should the calling function?
+        // 2. What information does your NSError give that JSONSerialization's built-in error doesn't?
         let json = self.toJson()
         
         do {
+            // always semi-descriptive var names, please
             let x = try JSONSerialization.data(withJSONObject: json, options: [])
             return x
         }
