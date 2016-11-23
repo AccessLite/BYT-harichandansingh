@@ -21,7 +21,7 @@ final class FoassOperation: JSONConvertible, DataConvertible {
         self.fields = fields
     }
     
-    convenience  init?(json: [String : AnyObject]) {
+    required convenience init?(json: [String : AnyObject]) {
         guard let name = json["name"] as? String,
             let url = json["url"] as? String,
             let fields = json["fields"] as? [[String: AnyObject]]
@@ -29,20 +29,19 @@ final class FoassOperation: JSONConvertible, DataConvertible {
         self.init(name: name, url: url, fields: fields)
     }
     
-    convenience init?(data: Data) {
+    required convenience init?(data: Data) {
         do {
             let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]
             
             if let validJson = json {
-                guard let name = validJson["name"] as? String,
-                    let url = validJson["url"] as? String,
-                    let fields = validJson["fields"] as? [[String: AnyObject]]
-                    else { return nil }
+                self.init(json: validJson)
+            } else {
+                return nil
             }
-            self.init(name: name, url: url, fields: fields)
         }
         catch {
             print("Error casting from data: \(error)")
+            return nil
         }
     }
     
