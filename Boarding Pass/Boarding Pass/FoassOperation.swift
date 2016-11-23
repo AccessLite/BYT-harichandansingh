@@ -59,8 +59,8 @@ final class FoassOperation: JSONConvertible, DataConvertible {
         let json = self.toJson()
         
         do {
-            let x = try JSONSerialization.data(withJSONObject: json, options: [])
-            return x
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            return data
         }
         catch {
             throw NSError(domain: "Error converting to Data type", code: 1, userInfo: nil)

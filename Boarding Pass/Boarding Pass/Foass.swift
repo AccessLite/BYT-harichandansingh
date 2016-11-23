@@ -26,6 +26,7 @@ class Foass: JSONConvertible, CustomStringConvertible {
         guard let message = json["message"] as? String,
             let subtitle = json["subtitle"] as? String
             else { return nil }
+        
         self.init(message: message, subtitle: subtitle)
     }
     
