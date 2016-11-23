@@ -12,10 +12,10 @@ final class FoassOperation: JSONConvertible, DataConvertible {
     //MARK: - Properties
     let name: String
     let url: String
-    let fields: [[String: AnyObject]]
+    let fields: [FoassField]              
     
-    //MARK; - Initializers
-    init(name: String, url: String, fields: [[String: AnyObject]]) {
+    //MARK: - Initializers
+    init(name: String, url: String, fields: [FoassField]) {
         self.name = name
         self.url = url
         self.fields = fields
@@ -26,7 +26,14 @@ final class FoassOperation: JSONConvertible, DataConvertible {
             let url = json["url"] as? String,
             let fields = json["fields"] as? [[String: AnyObject]]
             else { return nil }
-        self.init(name: name, url: url, fields: fields)
+        
+        var allFields: [FoassField] = []
+        
+        for dict in fields {
+            guard let instance = FoassField(json: dict) else { return nil }
+            allFields.append(instance)
+        }
+        self.init(name: name, url: url, fields: allFields)
     }
     
     required convenience init?(data: Data) {
@@ -47,23 +54,14 @@ final class FoassOperation: JSONConvertible, DataConvertible {
     
     //MARK: - Methods
     func toJson() -> [String : AnyObject] {
-        let json: [String: AnyObject] =
-            ["name": self.name as AnyObject,
-             "url": self.url as AnyObject,
-             "fields": self.fields as AnyObject
+        return [
+            "name": self.name as AnyObject,
+            "url": self.url as AnyObject,
+            "fields": self.fields as AnyObject                          // this won't work once 'fields' is type [FoaasField]
         ]
-        return json
     }
     
     func toData() throws -> Data {
-        let json = self.toJson()
-        
-        do {
-            let data = try JSONSerialization.data(withJSONObject: json, options: [])
-            return data
-        }
-        catch {
-            throw NSError(domain: "Error converting to Data type", code: 1, userInfo: nil)
-        }
+        return try JSONSerialization.data(withJSONObject: self.toJson(), options: [])
     }
 }

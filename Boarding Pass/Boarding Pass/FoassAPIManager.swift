@@ -52,8 +52,8 @@ class FoassAPIManager {
                 for dict in operationsArray {
                     let operation = FoassOperation(json: dict)
                     allOperations.append(operation!)
-                    completion(allOperations)
                 }
+                completion(allOperations)
             }
             catch {
                 print("Encountered an error while getting [FoassOperation]?: \(error)")
