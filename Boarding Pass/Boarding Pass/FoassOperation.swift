@@ -12,7 +12,7 @@ final class FoassOperation: JSONConvertible, DataConvertible {
     //MARK: - Properties
     let name: String
     let url: String
-    let fields: [FoassField]              
+    let fields: [FoassField]
     
     //MARK: - Initializers
     init(name: String, url: String, fields: [FoassField]) {
@@ -27,12 +27,7 @@ final class FoassOperation: JSONConvertible, DataConvertible {
             let fields = json["fields"] as? [[String: AnyObject]]
             else { return nil }
         
-        var allFields: [FoassField] = []
-        
-        for dict in fields {
-            guard let instance = FoassField(json: dict) else { return nil }
-            allFields.append(instance)
-        }
+        let allFields: [FoassField] = fields.flatMap{ FoassField(json: $0) }
         self.init(name: name, url: url, fields: allFields)
     }
     
@@ -57,7 +52,7 @@ final class FoassOperation: JSONConvertible, DataConvertible {
         return [
             "name": self.name as AnyObject,
             "url": self.url as AnyObject,
-            "fields": self.fields as AnyObject                          // this won't work once 'fields' is type [FoaasField]
+            "fields": self.fields.flatMap{ $0.toJson() } as AnyObject
         ]
     }
     

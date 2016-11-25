@@ -16,6 +16,7 @@
 		475CB82C1DE5153E00A9CB5A /* FoassOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475CB82B1DE5153E00A9CB5A /* FoassOperation.swift */; };
 		475CB82E1DE515F800A9CB5A /* FoassField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475CB82D1DE515F800A9CB5A /* FoassField.swift */; };
 		475CB8301DE5180400A9CB5A /* FoassProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475CB82F1DE5180400A9CB5A /* FoassProtocols.swift */; };
+		477167CC1DE8AEA400AB6318 /* FoassDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477167CB1DE8AEA400AB6318 /* FoassDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		475CB82B1DE5153E00A9CB5A /* FoassOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassOperation.swift; sourceTree = "<group>"; };
 		475CB82D1DE515F800A9CB5A /* FoassField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassField.swift; sourceTree = "<group>"; };
 		475CB82F1DE5180400A9CB5A /* FoassProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassProtocols.swift; sourceTree = "<group>"; };
+		477167CB1DE8AEA400AB6318 /* FoassDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				475CB8271DE50D4D00A9CB5A /* FoassAPIManager.swift */,
+				477167CB1DE8AEA400AB6318 /* FoassDataManager.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 				475CB8281DE50D4D00A9CB5A /* FoassAPIManager.swift in Sources */,
 				475CB82E1DE515F800A9CB5A /* FoassField.swift in Sources */,
 				475CB80F1DE50B5200A9CB5A /* AppDelegate.swift in Sources */,
+				477167CC1DE8AEA400AB6318 /* FoassDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +354,7 @@
 				475CB81F1DE50B5200A9CB5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -30,8 +30,8 @@ class FoassAPIManager {
             
             do {
                 let foassDict = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: AnyObject]
-                if let x = foassDict {
-                    let foassObject = Foass.init(json: x)
+                if let unwrappedDict = foassDict {
+                    let foassObject = Foass.init(json: unwrappedDict)
                     completion(foassObject)
                 }
             }
@@ -42,17 +42,18 @@ class FoassAPIManager {
     }
     
     internal class func getOperations(completion: @escaping ([FoassOperation]?)->Void ) {
-        defaultSession.dataTask(with: FoassAPIManager.operationsURL) { (data: Data?, response: URLResponse?, error: Error?) in
+        var request: URLRequest = URLRequest(url: URL(string: "http://www.foaas.com/operations")!)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        defaultSession.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if error != nil {
-                print("Failed data task for [FoassOperation?]: \(error)")
+                print("Failed data task for [FoassOperation]?: \(error)")
             }
             var allOperations:[FoassOperation] =  []
             do {
-                guard let operationsArray = try JSONSerialization.jsonObject(with: data!, options: []) as? [[String: AnyObject]] else { return }
-                for dict in operationsArray {
-                    let operation = FoassOperation(json: dict)
-                    allOperations.append(operation!)
-                }
+                guard let jsonArray = try JSONSerialization.jsonObject(with: data!, options: []) as? [[String: AnyObject]] else { return }
+                allOperations = jsonArray.flatMap { FoassOperation(json: $0) }
                 completion(allOperations)
             }
             catch {
