@@ -20,8 +20,9 @@ class FoassDataManager {
     
     //MARK: - Methods
     func save(operations: [FoassOperation]) {
-        let data = operations.flatMap({ try? $0.toData() })
-        //        FoassDataManager.defaults.set(data, forKey: FoassDataManager.operationsKey)
+        let data: [Data] = operations.flatMap{ try? $0.toData() }
+        FoassDataManager.defaults.set(data, forKey: FoassDataManager.operationsKey)
+        print("Saved data")
     }
     
     func load() -> Bool {

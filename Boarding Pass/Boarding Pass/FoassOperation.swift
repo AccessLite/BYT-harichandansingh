@@ -52,7 +52,7 @@ final class FoassOperation: JSONConvertible, DataConvertible {
         return [
             "name": self.name as AnyObject,
             "url": self.url as AnyObject,
-            "fields": self.fields.flatMap{ $0.toJson() } as AnyObject
+            "fields": self.fields.map{ $0.toJson() } as AnyObject
         ]
     }
     
