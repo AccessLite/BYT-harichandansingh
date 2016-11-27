@@ -11,7 +11,7 @@ import Foundation
 final class FoassOperation: JSONConvertible, DataConvertible {
     //MARK: - Properties
     let name: String
-    let url: String
+    var url: String
     let fields: [FoassField]
     
     //MARK: - Initializers

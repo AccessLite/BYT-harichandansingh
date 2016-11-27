@@ -11,10 +11,9 @@ import Foundation
 class FoassAPIManager {
     //MARK: - Properties
     private static let defaultSession = URLSession(configuration: .default)
-    private static let name: String = "Louis"
-    private static var foassURL: URL {
-        return URL(string: "https://www.foaas.com/awesome/\(name)")!
-    }
+//    static var name: String = "Anonymous"
+    static var foassURL: URL = URL(string: "https://www.foaas.com/because/Anonymous")!
+    
     private static let operationsURL: URL = URL(string: "https://www.foaas.com/operations")!
     
     //MARK: - Methods
@@ -31,7 +30,7 @@ class FoassAPIManager {
             do {
                 let foassDict = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: AnyObject]
                 if let unwrappedDict = foassDict {
-                    let foassObject = Foass.init(json: unwrappedDict)
+                    let foassObject = Foass(json: unwrappedDict)
                     completion(foassObject)
                 }
             }

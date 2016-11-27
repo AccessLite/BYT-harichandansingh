@@ -17,6 +17,9 @@
 		475CB82E1DE515F800A9CB5A /* FoassField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475CB82D1DE515F800A9CB5A /* FoassField.swift */; };
 		475CB8301DE5180400A9CB5A /* FoassProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475CB82F1DE5180400A9CB5A /* FoassProtocols.swift */; };
 		477167CC1DE8AEA400AB6318 /* FoassDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477167CB1DE8AEA400AB6318 /* FoassDataManager.swift */; };
+		479780D21DEA0451007461AC /* FoassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479780D11DEA0451007461AC /* FoassViewController.swift */; };
+		479780D41DEA1292007461AC /* FoassOperationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479780D31DEA1292007461AC /* FoassOperationsTableViewController.swift */; };
+		479780D61DEA23DF007461AC /* OperationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479780D51DEA23DF007461AC /* OperationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		475CB82D1DE515F800A9CB5A /* FoassField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassField.swift; sourceTree = "<group>"; };
 		475CB82F1DE5180400A9CB5A /* FoassProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassProtocols.swift; sourceTree = "<group>"; };
 		477167CB1DE8AEA400AB6318 /* FoassDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassDataManager.swift; sourceTree = "<group>"; };
+		479780D11DEA0451007461AC /* FoassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassViewController.swift; sourceTree = "<group>"; };
+		479780D31DEA1292007461AC /* FoassOperationsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassOperationsTableViewController.swift; sourceTree = "<group>"; };
+		479780D51DEA23DF007461AC /* OperationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +95,9 @@
 		475CB8211DE50BAE00A9CB5A /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				479780D11DEA0451007461AC /* FoassViewController.swift */,
+				479780D31DEA1292007461AC /* FoassOperationsTableViewController.swift */,
+				479780D51DEA23DF007461AC /* OperationViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -184,13 +193,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				479780D41DEA1292007461AC /* FoassOperationsTableViewController.swift in Sources */,
 				475CB8301DE5180400A9CB5A /* FoassProtocols.swift in Sources */,
 				475CB82C1DE5153E00A9CB5A /* FoassOperation.swift in Sources */,
 				475CB82A1DE50F0E00A9CB5A /* Foass.swift in Sources */,
 				475CB8281DE50D4D00A9CB5A /* FoassAPIManager.swift in Sources */,
 				475CB82E1DE515F800A9CB5A /* FoassField.swift in Sources */,
+				479780D61DEA23DF007461AC /* OperationViewController.swift in Sources */,
 				475CB80F1DE50B5200A9CB5A /* AppDelegate.swift in Sources */,
 				477167CC1DE8AEA400AB6318 /* FoassDataManager.swift in Sources */,
+				479780D21DEA0451007461AC /* FoassViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

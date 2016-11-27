@@ -22,13 +22,14 @@ class FoassDataManager {
     func save(operations: [FoassOperation]) {
         let data: [Data] = operations.flatMap{ try? $0.toData() }
         FoassDataManager.defaults.set(data, forKey: FoassDataManager.operationsKey)
-        print("Saved data")
+        print("Saved data to User Defaults: \(FoassDataManager.defaults)")
     }
     
     func load() -> Bool {
         guard let defaultsData = FoassDataManager.defaults.value(forKey: FoassDataManager.operationsKey) as? [Data] else { return false }
         let operationsArray = defaultsData.flatMap{ FoassOperation(data: $0) }
         FoassDataManager.shared.operations = operationsArray
+        print("Loaded operations")
         return true
     }
     
