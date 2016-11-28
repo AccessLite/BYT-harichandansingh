@@ -101,22 +101,24 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
     //MARK: - Actions
     @IBAction func selectButtonTapped(_ sender: UIBarButtonItem) {
         
+        //            FoassAPIManager.getFoass(url: url) { (foass: Foass?) in
+        //
+        //            }
+        //            dismiss(animated: true, completion: nil)
+        
         let endpoint: String = (self.operation?.url)!
         let url = URL(string: "https://www.foaas.com\(endpoint)")!
-
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.post(name: Notification.Name(rawValue: "FoaasObjectDidUpdate"), object: nil, userInfo: [ "url" : url ])
+        
         dismiss(animated: true, completion: nil)
     }
     
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    }
     
-    
-    
-    
-
-     // MARK: - Navigation
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//
-//    }
-
     
 }
 

@@ -9,10 +9,6 @@
 import UIKit
 
 class FoassViewController: UIViewController {
-    //MARK: - Properties
-    static var mainText: String = ""
-    static var subtitleText: String = ""
-    
     //MARK: - Outlets
     @IBOutlet weak var mainTextLabel: UILabel!
     @IBOutlet weak var subtitleTextLabel: UILabel!
@@ -22,6 +18,21 @@ class FoassViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadFoass()
+        registerForNotifications()
+    }
+    
+    internal func registerForNotifications() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(updateFoaas(sender:)), name: Notification.Name(rawValue: "FoaasObjectDidUpdate"), object: nil)
+    }
+    
+    internal func updateFoaas(sender: Notification) {
+        if let notificationBundle = sender.userInfo {
+            if let updatedUrl = notificationBundle["url"] as? URL {
+                FoassAPIManager.foassURL = updatedUrl
+                loadFoass()
+            }
+        }
     }
     
     func loadFoass() {
