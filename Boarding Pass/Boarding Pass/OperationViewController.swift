@@ -26,13 +26,39 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
     @IBOutlet weak var fromTextField: UITextField!
     @IBOutlet weak var referenceLabel: UILabel!
     @IBOutlet weak var referenceTextField: UITextField!
+    @IBOutlet weak var scrollViewBottomLayoutGuideConstraint: NSLayoutConstraint!
+    
     
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerForKeyboardNotification()
         self.navigationItem.hidesBackButton = false
         loadUI(url: targetURL)
     }
+    
+    func registerForKeyboardNotification() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(self.keyboardWillShow), name: Notification.Name(rawValue: "UIKeyboardWillShowNotification"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(self.keyboardWillHide), name: Notification.Name(rawValue: "UIKeyboardWillHideNotification"), object: nil)
+    }
+    
+    internal func keyboardWillShow(sender: Notification) {
+        let userInfo = sender.userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let keyboardHeight: CGFloat = keyboardFrame.height
+        scrollViewBottomLayoutGuideConstraint.constant = keyboardHeight
+            self.view.updateConstraints()
+            print("Showing keyboard.")
+    }
+    
+    internal func keyboardWillHide(sender: Notification) {
+        scrollViewBottomLayoutGuideConstraint.constant = 0
+        self.view.updateConstraints()
+        print("Hiding keyboard.")
+    }
+    
+    
     
     func loadUI(url: URL) {
         // 1. This incurs a lot of network calls. Our goal is going to be making 1 single API call per operation to get
