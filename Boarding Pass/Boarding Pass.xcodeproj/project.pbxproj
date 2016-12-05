@@ -57,7 +57,9 @@
 				475CB80D1DE50B5200A9CB5A /* Boarding Pass */,
 				475CB80C1DE50B5200A9CB5A /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		475CB80C1DE50B5200A9CB5A /* Products */ = {
 			isa = PBXGroup;

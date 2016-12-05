@@ -15,7 +15,7 @@ class FoassOperationsTableViewController: UITableViewController {
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Operations"
+        self.navigationItem.title = "Operations" // nice attention to detail in adding the nav title based on the PDF mockup. You'd be surprised how often something like this goes unnoticed 
     }
     
     // MARK: - Table view data source
@@ -34,41 +34,6 @@ class FoassOperationsTableViewController: UITableViewController {
         cell.textLabel?.text = operation?.name
         return cell
     }
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
     
     //MARK: - Actions
     @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
