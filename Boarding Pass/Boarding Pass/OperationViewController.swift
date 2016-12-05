@@ -9,13 +9,13 @@
 import UIKit
 
 class OperationViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
-    //MARK: - Propvaries
+    //MARK: - Properties
     var operation: FoassOperation? = nil
     var uri: String {
         return (operation?.url)!
     }
     var targetURL: URL {
-        return URL(string: "https://www.foaas.com\(uri)")!
+        return URL(string: "https://www.foaas.com\(uri)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
     }
     
     //MARK: - Outlets
@@ -30,11 +30,20 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.hidesBackButton = true
+        self.navigationItem.hidesBackButton = false
         loadUI(url: targetURL)
     }
     
     func loadUI(url: URL) {
+        // 1. This incurs a lot of network calls. Our goal is going to be making 1 single API call per operation to get
+        //      the needed preview text. Then we store that locally, and update our preview text through string manipulations.
+        
+        // 2. It's not a huge inefficiency by any means, but by hard coding the 3 text field values we limit how
+        //      update-able our code is and incur additional "technical debt" from potentially introducing bugs
+        //      since code will need to be updated in several places if any changes to the UI need to be made.
+        //      Perhaps it might be better to create a UIView subclass, with a text field and label that we could
+        //      add X times to a UIStackView to only generate the number of views we need... hint hint
+        
         FoassAPIManager.getFoass(url: url, completion: { (foass: Foass?) in
             DispatchQueue.main.async {
                 self.previewTextView.text = foass?.description
@@ -71,54 +80,37 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
     
     //MARK: - Text Field Delegate Methods
     func textFieldDidEndEditing(_ textField: UITextField) {
+        guard textField.text != nil || textField.text?.isEmpty == false else { return }
+        
+        var componentsArray: [String] = (operation?.url)!.components(separatedBy: "/")
+        var componentPosition: Int!
+        
         switch textField {
-        case nameTextField:
-            var x = (operation?.url)!.components(separatedBy: "/")
-            x[2] = nameTextField.text!
-            let uri = x.joined(separator: "/")
-            operation?.url = uri
-            let newURL: URL = URL(string: "https://www.foaas.com\(uri)")!
-            loadUI(url: newURL)
-        case fromTextField:
-            var x = (operation?.url)!.components(separatedBy: "/")
-            x[3] = fromTextField.text!
-            let uri = x.joined(separator: "/")
-            operation?.url = uri
-            let newURL: URL = URL(string: "https://www.foaas.com\(uri)")!
-            loadUI(url: newURL)
-        case referenceTextField:
-            var x = (operation?.url)!.components(separatedBy: "/")
-            x[4] = referenceTextField.text!
-            let uri = x.joined(separator: "/")
-            operation?.url = uri
-            let newURL: URL = URL(string: "https://www.foaas.com\(uri)")!
-            loadUI(url: newURL)
+        case nameTextField: componentPosition = 2
+        case fromTextField: componentPosition = 3
+        case referenceTextField: componentPosition = 4
         default:
-            print("Should never reach this point.")
+            assertionFailure("Should never get here")
         }
+        
+        componentsArray[componentPosition] = textField.text!
+        let uri = componentsArray.joined(separator: "/")
+        self.operation?.url = uri
+        let newURL: URL = URL(string: "https://www.foaas.com\(uri)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
+        
+        self.loadUI(url: newURL)
     }
     
     //MARK: - Actions
     @IBAction func selectButtonTapped(_ sender: UIBarButtonItem) {
-        
-        //            FoassAPIManager.getFoass(url: url) { (foass: Foass?) in
-        //
-        //            }
-        //            dismiss(animated: true, completion: nil)
-        
         let endpoint: String = (self.operation?.url)!
-        let url = URL(string: "https://www.foaas.com\(endpoint)")!
+        let url = URL(string: "https://www.foaas.com\(endpoint)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.post(name: Notification.Name(rawValue: "FoaasObjectDidUpdate"), object: nil, userInfo: [ "url" : url ])
         
         dismiss(animated: true, completion: nil)
     }
-    
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    }
-    
     
 }
 
