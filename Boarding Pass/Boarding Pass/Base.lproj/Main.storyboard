@@ -42,6 +42,7 @@
                                 </constraints>
                                 <state key="normal" title="Button" image="Octopus-Cute"/>
                                 <connections>
+                                    <action selector="octoButtonTouchedDown:" destination="ONK-pA-jDB" eventType="touchDown" id="U73-Ci-XTd"/>
                                     <segue destination="uPY-oD-Jy2" kind="presentation" identifier="tableViewSegue" id="mme-av-djj"/>
                                 </connections>
                             </button>
@@ -81,7 +82,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JlL-fx-eew" id="sbS-pn-rA2">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>

@@ -33,6 +33,7 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
     override func viewDidLoad() {
         super.viewDidLoad()
         registerForKeyboardNotification()
+        hideKeyboard()
         self.navigationItem.hidesBackButton = false
         loadUI(url: targetURL)
     }
@@ -56,6 +57,15 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
         scrollViewBottomLayoutGuideConstraint.constant = 0
         self.view.updateConstraints()
         print("Hiding keyboard.")
+    }
+    
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     

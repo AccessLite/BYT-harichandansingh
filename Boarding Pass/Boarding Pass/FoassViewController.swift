@@ -44,6 +44,20 @@ class FoassViewController: UIViewController {
         }
     }
     
+    //MARK: - Actions
+    @IBAction func octoButtonTouchedDown(_ sender: UIButton) {
+        let newTransform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        let originalTransform = sender.imageView!.transform
+        
+        UIView.animate(withDuration: 0.1, animations: {
+            sender.transform = newTransform
+        }, completion: { (complete) in
+            sender.transform = originalTransform
+        })
+    }
+
+    
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "tableViewSegue" {
