@@ -43,7 +43,6 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
         //      since code will need to be updated in several places if any changes to the UI need to be made.
         //      Perhaps it might be better to create a UIView subclass, with a text field and label that we could
         //      add X times to a UIStackView to only generate the number of views we need... hint hint
-        
         FoassAPIManager.getFoass(url: url, completion: { (foass: Foass?) in
             DispatchQueue.main.async {
                 self.previewTextView.text = foass?.description
@@ -96,6 +95,7 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
         componentsArray[componentPosition] = textField.text!
         let uri = componentsArray.joined(separator: "/")
         self.operation?.url = uri
+        
         let newURL: URL = URL(string: "https://www.foaas.com\(uri)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
         
         self.loadUI(url: newURL)
