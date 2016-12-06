@@ -12,8 +12,7 @@ class FoassViewController: UIViewController {
     //MARK: - Outlets
     @IBOutlet weak var mainTextLabel: UILabel!
     @IBOutlet weak var subtitleTextLabel: UILabel!
-    
-    
+
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +43,30 @@ class FoassViewController: UIViewController {
         }
     }
     
+    internal func createScreenShotCompletion(image: UIImage, didFinishSavingWithError: NSError?, contextInfo: UnsafeMutableRawPointer?) {
+        if let _ = didFinishSavingWithError {
+            let alert = UIAlertController(title: "Error",
+                                          message: "There was an issue saving to the camera roll.",
+                                          preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK",
+                                         style: .default,
+                                         handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            let alert = UIAlertController(title: "Screenshot taken!",
+                                          message: "Image saved to Photo Library.",
+                                          preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK",
+                                         style: .default,
+                                         handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+    }
+
     //MARK: - Actions
     @IBAction func octoButtonTouchedDown(_ sender: UIButton) {
         let newTransform = CGAffineTransform(scaleX: 0.8, y: 0.8)
@@ -55,8 +78,22 @@ class FoassViewController: UIViewController {
             sender.transform = originalTransform
         })
     }
-
     
+    @IBAction func foassViewControllerTapped(_ sender: UITapGestureRecognizer) {
+        let activityViewController = UIActivityViewController(
+            activityItems: [self.mainTextLabel.text!, self.subtitleTextLabel.text!],
+            applicationActivities: nil)
+        present(activityViewController, animated: true, completion: nil)
+    }
+    
+    @IBAction func foassViewControllerLongPressed(_ sender: UILongPressGestureRecognizer) {
+        UIGraphicsBeginImageContextWithOptions(self.view.frame.size, false, UIScreen.main.scale)
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        UIImageWriteToSavedPhotosAlbum(image!, self, #selector(createScreenShotCompletion(image:didFinishSavingWithError:contextInfo:)), nil)
+    }
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

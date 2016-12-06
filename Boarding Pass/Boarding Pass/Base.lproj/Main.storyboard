@@ -48,6 +48,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="gMj-J1-Qnp" firstAttribute="top" secondItem="f8B-ZY-lud" secondAttribute="bottom" constant="8" id="0Cd-hW-rdB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gMj-J1-Qnp" secondAttribute="trailing" constant="8" id="0vw-i0-sa9"/>
@@ -59,6 +60,10 @@
                             <constraint firstItem="gMj-J1-Qnp" firstAttribute="top" secondItem="f8B-ZY-lud" secondAttribute="bottom" constant="8" id="opT-Ya-Qta"/>
                             <constraint firstAttribute="trailing" secondItem="f8B-ZY-lud" secondAttribute="trailing" constant="8" id="tqd-8r-4Vh"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="9bE-r0-bKR" appends="YES" id="a9n-lc-Khi"/>
+                            <outletCollection property="gestureRecognizers" destination="fG1-t1-S57" appends="YES" id="Cna-Y1-GZ2"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="mainTextLabel" destination="f8B-ZY-lud" id="ifQ-Db-O2F"/>
@@ -66,6 +71,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XC2-R6-gy9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="9bE-r0-bKR">
+                    <connections>
+                        <action selector="foassViewControllerTapped:" destination="ONK-pA-jDB" id="piq-wf-mmk"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="fG1-t1-S57">
+                    <connections>
+                        <action selector="foassViewControllerLongPressed:" destination="ONK-pA-jDB" id="rPB-N5-lM6"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-698.39999999999998" y="109.29535232383809"/>
         </scene>
