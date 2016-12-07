@@ -11,8 +11,7 @@ import Foundation
 class FoassAPIManager {
     //MARK: - Properties
     private static let defaultSession = URLSession(configuration: .default)
-//    static var name: String = "Anonymous"
-    static var foassURL: URL = URL(string: "https://www.foaas.com/because/Anonymous")!
+//    static var foassURL: URL = URL(string: "https://www.foaas.com/because/Anonymous")!
     
     private static let operationsURL: URL = URL(string: "https://www.foaas.com/operations")!
     

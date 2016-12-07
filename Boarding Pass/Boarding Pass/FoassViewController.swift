@@ -12,10 +12,13 @@ class FoassViewController: UIViewController {
     //MARK: - Outlets
     @IBOutlet weak var mainTextLabel: UILabel!
     @IBOutlet weak var subtitleTextLabel: UILabel!
-
+    
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        FoassDataManager.shared.requestOperations { (operations: [FoassOperation]?) in
+            //not sure what I should be doing with this completion handler
+        }
         loadFoass()
         registerForNotifications()
     }
@@ -28,14 +31,14 @@ class FoassViewController: UIViewController {
     internal func updateFoaas(sender: Notification) {
         if let notificationBundle = sender.userInfo {
             if let updatedUrl = notificationBundle["url"] as? URL {
-                FoassAPIManager.foassURL = updatedUrl
+                FoassDataManager.foassURL = updatedUrl
                 loadFoass()
             }
         }
     }
     
     func loadFoass() {
-        FoassAPIManager.getFoass(url: FoassAPIManager.foassURL) { (object: Foass?) in
+        FoassDataManager.getFoass(url: FoassDataManager.foassURL) { (object: Foass?) in
             DispatchQueue.main.async {
                 self.mainTextLabel.text = object?.message
                 self.subtitleTextLabel.text = object?.subtitle
@@ -64,9 +67,8 @@ class FoassViewController: UIViewController {
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
         }
-        
     }
-
+    
     //MARK: - Actions
     @IBAction func octoButtonTouchedDown(_ sender: UIButton) {
         let newTransform = CGAffineTransform(scaleX: 0.8, y: 0.8)

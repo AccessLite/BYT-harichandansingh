@@ -14,11 +14,31 @@ class FoassDataManager {
     private static let operationsKey: String = "FoaasOperationsKey"
     private static let defaults = UserDefaults.standard
     internal private(set) var operations: [FoassOperation]?
+    static var foassURL: URL = URL(string: "https://www.foaas.com/because/Anonymous")!
     
     //MARK: - Initializers
     private init() {}
     
     //MARK: - Methods
+    internal func requestOperations(_ operations: @escaping ([FoassOperation]?)->Void) {
+        if !FoassDataManager.shared.load() {
+            FoassAPIManager.getOperations(completion: { (operationsArray: [FoassOperation]?) in
+                if operationsArray != nil {
+                    print("Successfully contacted API and created array of Operations")
+                    if let unwrappedOperationsArray = operationsArray {
+                        FoassDataManager.shared.save(operations: unwrappedOperationsArray)
+                    }
+                }
+            })
+        }
+    }
+    
+    internal class func getFoass(url: URL, completion: @escaping (Foass?) -> Void) {
+        FoassAPIManager.getFoass(url: url) { (foass: Foass?) in
+            completion(foass)
+        }
+    }
+    
     func save(operations: [FoassOperation]) {
         let data: [Data] = operations.flatMap{ try? $0.toData() }
         FoassDataManager.defaults.set(data, forKey: FoassDataManager.operationsKey)

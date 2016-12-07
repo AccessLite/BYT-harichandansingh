@@ -15,17 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        if !FoassDataManager.shared.load() {
-            FoassAPIManager.getOperations(completion: { (operationsArray: [FoassOperation]?) in
-                if operationsArray != nil {
-                    print("Successfully contacted API and created array of Operations")
-                    if let unwrappedOperationsArray = operationsArray {
-                        FoassDataManager.shared.save(operations: unwrappedOperationsArray)
-                    }
-                }
-            })
-        }
         return true
     }
     

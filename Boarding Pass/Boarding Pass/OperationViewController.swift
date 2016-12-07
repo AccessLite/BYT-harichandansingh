@@ -49,8 +49,8 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
         let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
         let keyboardHeight: CGFloat = keyboardFrame.height
         scrollViewBottomLayoutGuideConstraint.constant = keyboardHeight
-            self.view.updateConstraints()
-            print("Showing keyboard.")
+        self.view.updateConstraints()
+        print("Showing keyboard.")
     }
     
     internal func keyboardWillHide(sender: Notification) {
@@ -79,7 +79,7 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
         //      since code will need to be updated in several places if any changes to the UI need to be made.
         //      Perhaps it might be better to create a UIView subclass, with a text field and label that we could
         //      add X times to a UIStackView to only generate the number of views we need... hint hint
-        FoassAPIManager.getFoass(url: url, completion: { (foass: Foass?) in
+        FoassDataManager.getFoass(url: url, completion: { (foass: Foass?) in
             DispatchQueue.main.async {
                 self.previewTextView.text = foass?.description
                 switch self.operation!.fields.count {
