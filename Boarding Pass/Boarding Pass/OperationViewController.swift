@@ -10,13 +10,15 @@ import UIKit
 
 class OperationViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     //MARK: - Properties
-    var operation: FoassOperation? = nil
+//    var operation: FoassOperation? = nil
+    var operation: FoassOperation!
     var uri: String {
         return (operation?.url)!
     }
     var targetURL: URL {
         return URL(string: "https://www.foaas.com\(uri)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
     }
+    var fpb: FoassPathBuilder?
     
     //MARK: - Outlets
     @IBOutlet weak var previewTextView: UITextView!
@@ -32,6 +34,7 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        fpb = FoassPathBuilder(operation: self.operation)
         registerForKeyboardNotification()
         hideKeyboard()
         self.navigationItem.hidesBackButton = false
@@ -68,8 +71,6 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
         view.endEditing(true)
     }
     
-    
-    
     func loadUI(url: URL) {
         // 1. This incurs a lot of network calls. Our goal is going to be making 1 single API call per operation to get
         //      the needed preview text. Then we store that locally, and update our preview text through string manipulations.
@@ -82,26 +83,28 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
         FoassDataManager.getFoass(url: url, completion: { (foass: Foass?) in
             DispatchQueue.main.async {
                 self.previewTextView.text = foass?.description
+                guard let allKeys: [String] = self.fpb?.allKeys() else { return }
+                
                 switch self.operation!.fields.count {
                 case 2:
-                    self.nameLabel.text = ":\(self.operation!.fields[0].name.lowercased())"
-                    self.nameTextField.placeholder = "\(self.operation!.fields[0].name.lowercased())"
-                    self.fromLabel.text = ":\(self.operation!.fields[1].name.lowercased())"
-                    self.fromTextField.placeholder = "\(self.operation!.fields[1].name.lowercased())"
+                    self.nameLabel.text = ":\(allKeys[0])"
+                    self.nameTextField.placeholder = allKeys[0]
+                    self.fromLabel.text = ":\(allKeys[1])"
+                    self.fromTextField.placeholder = allKeys[1]
                     
                     self.referenceLabel.isHidden = true
                     self.referenceTextField.isHidden = true
                 case 3:
-                    self.nameLabel.text = ":\(self.operation!.fields[0].name.lowercased())"
-                    self.nameTextField.placeholder = "\(self.operation!.fields[0].name.lowercased())"
-                    self.fromLabel.text = ":\(self.operation!.fields[1].name.lowercased())"
-                    self.fromTextField.placeholder = "\(self.operation!.fields[1].name.lowercased())"
-                    self.referenceLabel.text = ":\(self.operation!.fields[2].name.lowercased())"
-                    self.referenceTextField.placeholder = "\(self.operation!.fields[2].name.lowercased())"
+                    self.nameLabel.text = ":\(allKeys[0])"
+                    self.nameTextField.placeholder = allKeys[0]
+                    self.fromLabel.text = ":\(allKeys[1])"
+                    self.fromTextField.placeholder = allKeys[1]
+                    self.referenceLabel.text = ":\(allKeys[2])"
+                    self.referenceTextField.placeholder = allKeys[2]
                     
                 default:
-                    self.nameLabel.text = ":\(self.operation!.fields[0].name.lowercased())"
-                    self.nameTextField.placeholder = "\(self.operation!.fields[0].name.lowercased())"
+                    self.nameLabel.text = ":\(allKeys[0])"
+                    self.nameTextField.placeholder = allKeys[0]
                     self.fromTextField.isHidden = true
                     
                     self.fromLabel.isHidden = true
@@ -129,10 +132,9 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
         }
         
         componentsArray[componentPosition] = textField.text!
-        let uri = componentsArray.joined(separator: "/")
-        self.operation?.url = uri
-        
-        let newURL: URL = URL(string: "https://www.foaas.com\(uri)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
+        self.operation?.url = componentsArray.joined(separator: "/")
+        let uri = self.operation.url
+        let newURL: URL = URL(string: "https://www.foaas.com\(uri)")!
         
         self.loadUI(url: newURL)
     }

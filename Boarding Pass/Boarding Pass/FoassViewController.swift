@@ -47,26 +47,19 @@ class FoassViewController: UIViewController {
     }
     
     internal func createScreenShotCompletion(image: UIImage, didFinishSavingWithError: NSError?, contextInfo: UnsafeMutableRawPointer?) {
-        if let _ = didFinishSavingWithError {
-            let alert = UIAlertController(title: "Error",
-                                          message: "There was an issue saving to the camera roll.",
-                                          preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK",
-                                         style: .default,
-                                         handler: nil)
-            alert.addAction(okAction)
-            self.present(alert, animated: true, completion: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        var alert: UIAlertController
+        
+        // present appropriate message in UIAlertViewController
+        if didFinishSavingWithError != nil {
+            alert = UIAlertController(title: "Error", message: "There was an issue saving the image", preferredStyle: .alert)
         }
         else {
-            let alert = UIAlertController(title: "Screenshot taken!",
-                                          message: "Image saved to Photo Library.",
-                                          preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK",
-                                         style: .default,
-                                         handler: nil)
-            alert.addAction(okAction)
-            self.present(alert, animated: true, completion: nil)
+            alert = UIAlertController(title: "Screenshot Taken!", message: "Image saved to camera roll", preferredStyle: .alert)
         }
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
     //MARK: - Actions
@@ -89,12 +82,14 @@ class FoassViewController: UIViewController {
     }
     
     @IBAction func foassViewControllerLongPressed(_ sender: UILongPressGestureRecognizer) {
-        UIGraphicsBeginImageContextWithOptions(self.view.frame.size, false, UIScreen.main.scale)
-        view.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        UIImageWriteToSavedPhotosAlbum(image!, self, #selector(createScreenShotCompletion(image:didFinishSavingWithError:contextInfo:)), nil)
+        if sender.state == UIGestureRecognizerState.began {
+            UIGraphicsBeginImageContextWithOptions(self.view.frame.size, false, UIScreen.main.scale)
+            view.layer.render(in: UIGraphicsGetCurrentContext()!)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            UIImageWriteToSavedPhotosAlbum(image!, self, #selector(createScreenShotCompletion(image:didFinishSavingWithError:contextInfo:)), nil)
+        }
     }
     
     // MARK: - Navigation
