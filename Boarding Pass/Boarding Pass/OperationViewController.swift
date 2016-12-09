@@ -118,8 +118,7 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
         })
     }
     
-    //MARK: - Text Field Delegate Methods
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    func textFieldManager(textField: UITextField) {
         guard let allKeys: [String] = self.fpb?.allKeys() else { return }
         guard let text = textField.text, text.characters.count > 0 else { return }
         
@@ -137,7 +136,17 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
         if let newURL = URL(string: "https://www.foaas.com" + (self.fpb?.build())!) {
             loadUI(url: newURL)
         }
+    }
+    
+    //MARK: - Text Field Delegate Methods
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textFieldManager(textField: textField)
         
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textFieldManager(textField: textField)
+        return true 
     }
     
     //MARK: - Actions
