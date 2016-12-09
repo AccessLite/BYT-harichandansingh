@@ -9,6 +9,9 @@
 import UIKit
 
 class FoassViewController: UIViewController {
+    //MARK: - Properties
+    static let profanityToggle: Bool = true
+    
     //MARK: - Outlets
     @IBOutlet weak var mainTextLabel: UILabel!
     @IBOutlet weak var subtitleTextLabel: UILabel!
@@ -40,8 +43,14 @@ class FoassViewController: UIViewController {
     func loadFoass() {
         FoassDataManager.getFoass(url: FoassDataManager.foassURL) { (object: Foass?) in
             DispatchQueue.main.async {
-                self.mainTextLabel.text = object?.message
-                self.subtitleTextLabel.text = object?.subtitle
+                if FoassViewController.profanityToggle {
+                    self.mainTextLabel.text = object?.message.filterFoulWords()
+                    self.subtitleTextLabel.text = object?.subtitle.filterFoulWords()
+                }
+                else {
+                    self.mainTextLabel.text = object?.message
+                    self.subtitleTextLabel.text = object?.subtitle
+                }
             }
         }
     }
@@ -59,7 +68,6 @@ class FoassViewController: UIViewController {
         }
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
-        
     }
     
     //MARK: - Actions

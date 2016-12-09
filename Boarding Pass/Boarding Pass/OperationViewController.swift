@@ -80,7 +80,12 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
         //      add X times to a UIStackView to only generate the number of views we need... hint hint
         FoassDataManager.getFoass(url: url, completion: { (foass: Foass?) in
             DispatchQueue.main.async {
-                self.previewTextView.text = foass?.description
+                if FoassViewController.profanityToggle {
+                    self.previewTextView.text = foass?.description.filterFoulWords()
+                }
+                else {
+                    self.previewTextView.text = foass?.description
+                }
                 guard let allKeys: [String] = self.fpb?.allKeys() else { return }
                 
                 switch self.operation!.fields.count {

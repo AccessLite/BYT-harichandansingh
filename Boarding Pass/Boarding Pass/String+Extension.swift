@@ -9,8 +9,8 @@
 import Foundation
 
 extension String {
-    func filterFoulWords (previewText: String) -> String {
-        var words = previewText.components(separatedBy: " ")
+    func filterFoulWords() -> String {
+        var words = self.components(separatedBy: " ")
         for (index, word) in words.enumerated() {
             let filteredWord = word.replacingOccurrences(of: word, with: filter(word), options: .caseInsensitive, range: nil)
             words[index] = filteredWord
@@ -31,4 +31,5 @@ extension String {
         }
         return word
     }
+    
 }
