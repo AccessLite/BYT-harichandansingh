@@ -29,7 +29,6 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
     @IBOutlet weak var referenceTextField: UITextField!
     @IBOutlet weak var scrollViewBottomLayoutGuideConstraint: NSLayoutConstraint!
     
-    
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
