@@ -10,7 +10,6 @@ import UIKit
 
 class OperationViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     //MARK: - Properties
-//    var operation: FoassOperation? = nil
     var operation: FoassOperation!
     var uri: String {
         return (operation?.url)!
@@ -105,7 +104,6 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
                 default:
                     self.nameLabel.text = ":\(allKeys[0])"
                     self.nameTextField.placeholder = allKeys[0]
-                    self.fromTextField.isHidden = true
                     
                     self.fromLabel.isHidden = true
                     self.fromTextField.isHidden = true
@@ -118,30 +116,29 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
     
     //MARK: - Text Field Delegate Methods
     func textFieldDidEndEditing(_ textField: UITextField) {
-        guard textField.text != nil || textField.text?.isEmpty == false else { return }
-        
-        var componentsArray: [String] = (operation?.url)!.components(separatedBy: "/")
-        var componentPosition: Int!
+        guard let allKeys: [String] = self.fpb?.allKeys() else { return }
+        guard let text = textField.text, text.characters.count > 0 else { return }
         
         switch textField {
-        case nameTextField: componentPosition = 2
-        case fromTextField: componentPosition = 3
-        case referenceTextField: componentPosition = 4
+        case nameTextField:
+            self.fpb?.update(key: allKeys[0], value: text)
+        case fromTextField:
+            self.fpb?.update(key: allKeys[1], value: text)
+        case referenceTextField:
+            self.fpb?.update(key: allKeys[2], value: text)
         default:
-            assertionFailure("Should never get here")
+            assertionFailure("Should never get here.")
         }
         
-        componentsArray[componentPosition] = textField.text!
-        self.operation?.url = componentsArray.joined(separator: "/")
-        let uri = self.operation.url
-        let newURL: URL = URL(string: "https://www.foaas.com\(uri)")!
+        if let newURL = URL(string: "https://www.foaas.com" + (self.fpb?.build())!) {
+            loadUI(url: newURL)
+        }
         
-        self.loadUI(url: newURL)
     }
     
     //MARK: - Actions
     @IBAction func selectButtonTapped(_ sender: UIBarButtonItem) {
-        let endpoint: String = (self.operation?.url)!
+        let endpoint: String = (self.fpb?.build())!
         let url = URL(string: "https://www.foaas.com\(endpoint)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
         
         let notificationCenter = NotificationCenter.default
@@ -151,4 +148,3 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
     }
     
 }
-
