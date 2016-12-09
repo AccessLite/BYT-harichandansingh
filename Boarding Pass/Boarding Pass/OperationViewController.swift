@@ -146,7 +146,7 @@ class OperationViewController: UIViewController, UITextViewDelegate, UITextField
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textFieldManager(textField: textField)
-        return true 
+        return true
     }
     
     //MARK: - Actions
