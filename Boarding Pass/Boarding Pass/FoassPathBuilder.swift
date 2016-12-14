@@ -38,8 +38,9 @@ class FoassPathBuilder {
     }
     
     func indexOf(key: String) -> Int? {
-        let urlComponentArray = operation.url.components(separatedBy: "/:")
-        return urlComponentArray.contains(key) ? urlComponentArray.index(of: key)! - 1 : nil
+//        let urlComponentArray = operation.url.components(separatedBy: "/:")
+//        return urlComponentArray.contains(key) ? urlComponentArray.index(of: key)! - 1 : nil
+        return self.allKeys().index(of: key)
     }
     
     func allKeys() -> [String] {

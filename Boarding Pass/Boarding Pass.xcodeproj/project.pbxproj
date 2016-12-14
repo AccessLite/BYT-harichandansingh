@@ -20,6 +20,7 @@
 		479780D21DEA0451007461AC /* FoassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479780D11DEA0451007461AC /* FoassViewController.swift */; };
 		479780D41DEA1292007461AC /* FoassOperationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479780D31DEA1292007461AC /* FoassOperationsTableViewController.swift */; };
 		479780D61DEA23DF007461AC /* OperationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479780D51DEA23DF007461AC /* OperationViewController.swift */; };
+		47D33B5D1DFB32F200231C6E /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D33B5C1DFB32F200231C6E /* String+Extension.swift */; };
 		47D976351DF78A5200B7EBBA /* FoassPathBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D976341DF78A5200B7EBBA /* FoassPathBuilder.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		479780D11DEA0451007461AC /* FoassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassViewController.swift; sourceTree = "<group>"; };
 		479780D31DEA1292007461AC /* FoassOperationsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassOperationsTableViewController.swift; sourceTree = "<group>"; };
 		479780D51DEA23DF007461AC /* OperationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationViewController.swift; sourceTree = "<group>"; };
+		47D33B5C1DFB32F200231C6E /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		47D976341DF78A5200B7EBBA /* FoassPathBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoassPathBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,6 +95,7 @@
 				475CB82D1DE515F800A9CB5A /* FoassField.swift */,
 				475CB82F1DE5180400A9CB5A /* FoassProtocols.swift */,
 				47D976341DF78A5200B7EBBA /* FoassPathBuilder.swift */,
+				47D33B5C1DFB32F200231C6E /* String+Extension.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				475CB82C1DE5153E00A9CB5A /* FoassOperation.swift in Sources */,
 				475CB82A1DE50F0E00A9CB5A /* Foass.swift in Sources */,
 				475CB8281DE50D4D00A9CB5A /* FoassAPIManager.swift in Sources */,
+				47D33B5D1DFB32F200231C6E /* String+Extension.swift in Sources */,
 				475CB82E1DE515F800A9CB5A /* FoassField.swift in Sources */,
 				479780D61DEA23DF007461AC /* OperationViewController.swift in Sources */,
 				475CB80F1DE50B5200A9CB5A /* AppDelegate.swift in Sources */,

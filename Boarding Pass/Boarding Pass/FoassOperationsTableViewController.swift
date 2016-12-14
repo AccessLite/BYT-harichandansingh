@@ -31,7 +31,12 @@ class FoassOperationsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         let operation = FoassDataManager.shared.operations?[indexPath.row]
         cell.textLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: UIFontWeightBold)
-        cell.textLabel?.text = operation?.name
+        if FoassViewController.profanityToggle {
+            cell.textLabel?.text = operation?.name.filterFoulWords()
+        }
+        else {
+            cell.textLabel?.text = operation?.name
+        }
         return cell
     }
     
@@ -49,7 +54,7 @@ class FoassOperationsTableViewController: UITableViewController {
                     
                     let indexPath = tableView.indexPath(for: cell)
                     let operation = FoassDataManager.shared.operations?[indexPath!.row]
-                    ovc.operation = operation   
+                    ovc.operation = operation
                 }
             }
         }
